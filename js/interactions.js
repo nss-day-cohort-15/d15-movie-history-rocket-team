@@ -14,11 +14,13 @@ var searchMovies = function (movieTitle) {
 };
 
 var saveMovie = function (movieObj) {
+  console.log("Movie to be saved:", movieObj);
+  console.log("Parsed movie:", JSON.stringify(movieObj));
   return new Promise (function (resolve, reject) {
     $.ajax({
       url: `https://rocket-team-movies.firebaseio.com/movies.json`,
       type: 'POST',
-      data: movieObj,
+      data: JSON.stringify(movieObj),
       dataType: 'json'
     }).done(function(data){
       resolve(data);
