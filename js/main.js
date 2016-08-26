@@ -3,6 +3,7 @@
 var $ = require('jquery'),
     Handlebars = require('hbsfy/runtime'),
     movieTemplate = require('../templates/movie-template.hbs'),
+    savedMovieTemplate = require('../templates/saved-movie-template.hbs'),
     interact = require('./interactions');
 
 var userId = null;
@@ -46,15 +47,19 @@ $(document).on("click", "#navShow", function() {
   $("#showContainer").toggleClass('hidden');
   interact.showSavedMovies(userId)
   .then(function (data) {
-      var dataArray = [];
-      var imdbArray = [];
+    var dataArray = [];
+    var imdbArray = [];
     $.each(data, function(key, value) {
       value.key = key;
       dataArray.push(value);
       imdbArray.push(value.imdbID);
     });
 
-    interact.getSavedMovies(imdbArray);
+    interact.getSavedMovies(imdbArray.map((imdbId) => {
+      return interact.searchMovieByImdbId(imdbId);
+    })).then((data) => {
+    console.log(data);
+  });
   });
 });
 
