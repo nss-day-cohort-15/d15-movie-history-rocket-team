@@ -13,6 +13,17 @@ var searchMovies = function (movieTitle) {
   });
 };
 
+var searchMovieByImdbId = function (imdbID) {
+  return new Promise (function (resolve, reject) {
+    $.ajax({
+      url: `http://www.omdbapi.com/?i=${imdbID}&y=&type=movie&r=json`,
+      type: 'GET'
+    }).done(function(data){
+      resolve(data);
+    });
+  });
+};
+
 var saveMovie = function (movieObj) {
   console.log("Movie to be saved:", movieObj);
   console.log("Parsed movie:", JSON.stringify(movieObj));
@@ -63,9 +74,16 @@ var deleteSavedMovie = function () {
 };
 
 var getSavedMovies = function (imdbArray) {
-  return Promise.all(imdbArray) {
-
+  return Promise.all(imdbArray);
 };
 
-module.exports = {searchMovies, saveMovie, showSavedMovies, editSavedMovie, deleteSavedMovie};
+module.exports = {
+  searchMovies,
+  saveMovie,
+  showSavedMovies,
+  editSavedMovie,
+  deleteSavedMovie,
+  searchMovieByImdbId,
+  getSavedMovies
+};
 
