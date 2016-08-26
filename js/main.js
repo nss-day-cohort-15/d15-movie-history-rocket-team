@@ -56,22 +56,29 @@ function buildMovieObj (e) {
   console.log(movie);
 
   console.dir(e.currentTarget);
-  let imbdID = $(e.currentTarget).data("imbdid");
-  console.log("imbdid", imbdID);
+  let imdbID = $(e.currentTarget).data("imdbid");
+  console.log("imdbid", imdbID);
 
   let watchedStatus = $(movie).find('input:checkbox:checked').val();
   console.log("watched status", watchedStatus);
 
-  let userRating = $(movie).find('input:select:selected').val();
+  // Save watchedStatus as a boolean value
+  if (watchedStatus === "on") {
+    watchedStatus = true;
+  } else {
+    watchedStatus = false;
+  }
+
+  let userRating = $(movie).find('select').val();
   console.log("userRating", userRating);
 
   let uid = userId;
 
   return {
-    "imbdID": imbdID,
-    "watchedStatus": watchedStatus,
-    "userRating": userRating,
-    "uid": uid
+    imdbID,
+    watchedStatus,
+    userRating,
+    uid
   };
 }
 
