@@ -1,7 +1,6 @@
-{{#each movie}}
 <div class="col-sm-4 movie">
-  <button type="button" class="btn btn-success editButton" data-editKey="{{movie.key}}">Save</button>
-  <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{key}}">Delete</button>
+  <button type="button" class="btn btn-success editButton" data-editKey="{{fbId}}">Edit</button>
+  <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{fbId}}">Delete</button>
   <img src="{{Poster}}" alt="{{Title}}"/>
   <h3>{{Title}}</h3>
   <ul>
@@ -9,14 +8,7 @@
     <li>{{Actors}}</li>
   </ul>
   <label for="{{imdbID}}-watched">Watched:</label>
-  <input type="checkbox" name="{{imdbID}}-watched" id="{{imdbID}}-watched"/>
+  <div name="{{imdbID}}-watched" style="display: inline-block">{{watched}}</div>
   <label for="{{imdbID}}-rating">Rating:</label>
-  <select id="{{imdbID}}-rating" value={{userRating}}>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-  </select>
+  <div name="{{imdbID}}-rating" style="display: inline-block">{{rating}}</div>
 </div>
-{{/each}}

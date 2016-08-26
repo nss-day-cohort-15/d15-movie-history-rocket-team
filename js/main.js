@@ -45,31 +45,20 @@ $(document).on("click", ".saveButton", function (e) {
 $(document).on("click", "#navShow", function() {
   $("#findContainer").toggleClass('hidden');
   $("#showContainer").toggleClass('hidden');
+  $("#showContainerRow").html("");
   interact.showSavedMovies(userId)
-  .then(function (data) {
-    var dataArray = [];
-    var imdbArray = [];
-    $.each(data, function(key, value) {
-      value.key = key;
-      dataArray.push(value);
-      imdbArray.push(value.imdbID);
-    });
-
-    interact.getSavedMovies(imdbArray.map((imdbId) => {
-      return interact.searchMovieByImdbId(imdbId);
-    }))
-    .then((data) => {
-      data.forEach((movie, iter) => {
-        movie.fbId = dataArray[iter].key;
-        movie.watched = dataArray[iter].watchedStatus;
-        movie.rating = dataArray[iter].userRating;
-        movie.uid = dataArray[iter].uid;
-      });
-      console.log(data);
-      // savedMovieTemplate(data);
-    });
-  });
+  .then(loadDom);
 });
+
+$(document).on("click", ".deleteButton", function() {
+  let deleteKey = $(this).data("deletekey");
+  interact.deleteSavedMovie(deleteKey)
+  .then(function(data) {
+    $("#showContainerRow").html("");
+    interact.showSavedMovies(userId)
+    .then(loadDom);
+  })
+})
 
 function buildMovieObj (e) {
   let movie = $(e.currentTarget).parent(".movie");
@@ -93,4 +82,29 @@ function buildMovieObj (e) {
   };
 }
 
+function loadDom (data) {
+    var dataArray = [];
+    var imdbArray = [];
+    $.each(data, function(key, value) {
+      value.key = key;
+      dataArray.push(value);
+      imdbArray.push(value.imdbID);
+    });
+
+    interact.getSavedMovies(imdbArray.map((imdbId) => {
+      return interact.searchMovieByImdbId(imdbId);
+    }))
+    .then((data) => {
+      data.forEach((movie, iter) => {
+        movie.fbId = dataArray[iter].key;
+        movie.watched = dataArray[iter].watchedStatus;
+        movie.rating = dataArray[iter].userRating;
+        movie.uid = dataArray[iter].uid;
+      });
+      console.log(data);
+      data.forEach(function (movie) {
+        $("#showContainerRow").append(savedMovieTemplate(movie));
+      });
+    });
+  };
 

@@ -62,10 +62,10 @@ var editSavedMovie = function () {
   });
 };
 
-var deleteSavedMovie = function () {
+var deleteSavedMovie = function (deleteKey) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/`,
+      url: `https://rocket-team-movies.firebaseio.com/movies/${deleteKey}.json`,
       type: 'DELETE'
     }).done(function(data){
       resolve(data);
