@@ -83,7 +83,7 @@ module.exports = {
   showSavedMovies,
   editSavedMovie,
   deleteSavedMovie,
-  getSavedMovies,
-  searchMovieByImdbId
+  searchMovieByImdbId,
+  getSavedMovies
 };
 
