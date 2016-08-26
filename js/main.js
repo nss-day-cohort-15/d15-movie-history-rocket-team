@@ -30,8 +30,8 @@ $(document).on("click", "#searchButton", function () {
 });
 
 // THIS FUNCTION SAVES A MOVIE TO FIREBASE WITH A UNIQUE ID
-$(document).on("click", ".saveButton", function (e) {
-  let movieObj = buildMovieObj(e);
+$(document).on("click", ".saveButton", function () {
+  let movieObj = buildMovieObj();
   let that = this;
   interact.saveMovie(movieObj)
   .then(function (data) {
@@ -56,8 +56,8 @@ function buildMovieObj (e) {
   console.log(movie);
 
   console.dir(e.currentTarget);
-  let imbdID = $(e.currentTarget).data("imbdid");
-  console.log("imbdid", imbdID);
+  let imdbID = $(e.currentTarget).data("imdbid");
+  console.log("imdbid", imdbID);
 
   let watchedStatus = $(movie).find('input:checkbox:checked').val();
   console.log("watched status", watchedStatus);
