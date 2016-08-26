@@ -7,48 +7,44 @@
 </head>
 
 <!-- Nav bar starts here  -->
-<header role="banner">
-  <img id="logo-main" src="https://f4.bcbits.com/img/a3357501286_5.jpg" width="200" height="150" alt="Tunnel Snakes movie database">
-<nav id="navbar-primary" class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-      <ul class="nav navbar-nav nav-pills"">
-        <li class="active"><a href="#">Find movies</a></li>
-        <li><a href="#">Show Movies</a></li>
-        <li><a href="#">Login</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</header><
+  <header role="banner">
+    <img id="logo-main" src="https://f4.bcbits.com/img/a3357501286_5.jpg" width="200" height="150" alt="Tunnel Snakes movie database">
+  <nav id="navbar-primary" class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbar-primary-collapse">
+        <ul class="nav navbar-nav nav-pills"">
+          <li class="active" id="navFind"><a href="#">Find movies</a></li>
+          <li id="navShow"><a href="#">Show Movies</a></li>
+          <li><a href="#">Login</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  </header>
 
 <!-- Nav bar ends here  -->
 
 
 
 <!-- Here's where our Find Movies will show up  -->
-<div id="#findContainer" clas="container">
-  <form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-      <input type="text" class="form-control">
+  <div id="findContainer" class="container">
+    <div class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" id="searchInput">
+      </div>
+      <button type="submit" id="searchButton" class="btn btn-default">Search</button>
     </div>
-    <button type="submit" id="searchButton" class="btn btn-default">Search</button>
-  </form>
-   <div class="row" id="findContainerRow">
+     <div class="row" id="findContainerRow">
+    </div>
   </div>
-</div>
 
 <!-- Here's where our Show Movies will show up  -->
-<div id="#showContainer" class="container">
-  <h1> Your saved movies</h1>
-  <div class="row" id="showContainerRow">
+  <div id="showContainer" class="container">
+    <h1> Your saved movies</h1>
+    <div class="row" id="showContainerRow">
+    </div>
+
   </div>
-
-</div>
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-
-  <script src="dist/app.js"></script>
+<script src="dist/app.js"></script>
 </body>
 </html>
