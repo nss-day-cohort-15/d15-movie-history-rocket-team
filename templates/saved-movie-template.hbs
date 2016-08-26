@@ -1,5 +1,6 @@
+{{#each movie}}
 <div class="col-sm-4 movie">
-  <button type="button" class="btn btn-success editButton" data-editKey="{{key}}">Save</button>
+  <button type="button" class="btn btn-success editButton" data-editKey="{{movie.key}}">Save</button>
   <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{key}}">Delete</button>
   <img src="{{Poster}}" alt="{{Title}}"/>
   <h3>{{Title}}</h3>
@@ -18,3 +19,4 @@
     <option>5</option>
   </select>
 </div>
+{{/each}}
