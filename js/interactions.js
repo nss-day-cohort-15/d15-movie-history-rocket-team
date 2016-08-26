@@ -32,7 +32,7 @@ var saveMovie = function (movieObj) {
 var showSavedMovies = function (userId) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/`,
+      url: `https://rocket-team-movies.firebaseio.com/movies.json`,
       type: 'GET'
     }).done(function(data){
       resolve(data);
@@ -60,6 +60,11 @@ var deleteSavedMovie = function () {
       resolve(data);
     });
   });
+};
+
+var getSavedMovies = function (imdbArray) {
+  return Promise.all(imdbArray) {
+
 };
 
 module.exports = {searchMovies, saveMovie, showSavedMovies, editSavedMovie, deleteSavedMovie};

@@ -30,13 +30,12 @@ $(document).on("click", "#searchButton", function () {
 });
 
 // THIS FUNCTION SAVES A MOVIE TO FIREBASE WITH A UNIQUE ID
-$(document).on("click", ".saveButton", function () {
-  let movieObj = buildMovieObj();
-  let that = this;
+$(document).on("click", ".saveButton", function (e) {
+  let movieObj = buildMovieObj(e);
   interact.saveMovie(movieObj)
   .then(function (data) {
     console.log("Your song has been saved!");
-    $(that).remove();
+    $(this).remove();
   });
 });
 
@@ -45,23 +44,24 @@ $(document).on("click", ".saveButton", function () {
 $(document).on("click", "#navShow", function() {
   $("#findContainer").toggleClass('hidden');
   $("#showContainer").toggleClass('hidden');
-  interact.getSavedMovies(userId)
+  interact.showSavedMovies(userId)
   .then(function (data) {
-    // data.each($(showContainerRow))?????
+      var dataArray = [];
+      var imdbArray = [];
+    $.each(data, function(key, value) {
+      value.key = key;
+      dataArray.push(value);
+      imdbArray.push(value.imdbID);
+    });
+
+    interact.getSavedMovies(imdbArray);
   });
 });
 
 function buildMovieObj (e) {
   let movie = $(e.currentTarget).parent(".movie");
-  console.log(movie);
-
-  console.dir(e.currentTarget);
   let imdbID = $(e.currentTarget).data("imdbid");
-  console.log("imdbid", imdbID);
-
   let watchedStatus = $(movie).find('input:checkbox:checked').val();
-  console.log("watched status", watchedStatus);
-
   // Save watchedStatus as a boolean value
   if (watchedStatus === "on") {
     watchedStatus = true;
@@ -70,8 +70,6 @@ function buildMovieObj (e) {
   }
 
   let userRating = $(movie).find('select').val();
-  console.log("userRating", userRating);
-
   let uid = userId;
 
   return {
