@@ -62,16 +62,23 @@ function buildMovieObj (e) {
   let watchedStatus = $(movie).find('input:checkbox:checked').val();
   console.log("watched status", watchedStatus);
 
-  let userRating = $(movie).find('input:select:selected').val();
+  // Save watchedStatus as a boolean value
+  if (watchedStatus === "on") {
+    watchedStatus = true;
+  } else {
+    watchedStatus = false;
+  }
+
+  let userRating = $(movie).find('select').val();
   console.log("userRating", userRating);
 
   let uid = userId;
 
   return {
-    "imbdID": imbdID,
-    "watchedStatus": watchedStatus,
-    "userRating": userRating,
-    "uid": uid
+    imdbID,
+    watchedStatus,
+    userRating,
+    uid
   };
 }
 
