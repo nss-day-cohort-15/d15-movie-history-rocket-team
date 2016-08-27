@@ -24,12 +24,14 @@ $(document).on("click", "#searchButton", function () {
   if(!$("#searchInput").val()) {
     return alert("You need to enter a movie title");
   }
-  console.log("request good");
   let movieTitle = $("#searchInput").val();
   interact.searchMovies(movieTitle)
   .then(function (data) {
     console.log(data);
     data.userRating = 0;
+      if(data.Response === "False" || data.Actors === "N/A"){
+        return alert("No Movie Found!");
+      }
     $("#findContainerRow").append(movieTemplate(data));
   });
 });
@@ -62,6 +64,23 @@ $(document).on("click", "#navShow", function() {
   $("#showContainerRow").html("");
   interact.showSavedMovies(userId)
   .then(loadDom);
+});
+
+// SWITCH WATCHED / UNWATCHED VIEWS
+$(document).on("click", "#watchedMoviesButton", function() {
+  $("#watchMoviesButton").addClass('active');
+  $("#showContainerRow").removeClass('hidden');
+
+  $("#unwatchedMoviesButton").removeClass('active');
+  $("#showUnwatchedRow").addClass('hidden');
+});
+
+$(document).on("click", "#unwatchedMoviesButton", function() {
+  $("#unwatchMoviesButton").addClass('active');
+  $("#showUnwatchedRow").removeClass('hidden');
+
+  $("#watchedMoviesButton").removeClass('active');
+  $("#showContainerRow").addClass('hidden');
 });
 
 // DELETE THAT MOVIE FUNCTION
@@ -142,7 +161,11 @@ function loadDom (data) {
       });
       console.log(data);
       data.forEach(function (movie) {
+        if(movie.watched === false) {
+          $("#showUnwatchedRow").append(savedMovieTemplate(movie));
+        } else if (movie.watched === true) {
         $("#showContainerRow").append(savedMovieTemplate(movie));
+      };
       });
     });
   };

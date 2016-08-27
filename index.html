@@ -39,10 +39,10 @@
 <!-- Here's where our Show Movies will show up  -->
   <div id="showContainer" class="container hidden">
     <h1> Your saved movies</h1>
-    <div class="row" id="showContainerRow">
-    <div class="col-md-1"></div>
-    </div>
-
+    <button type="button" class="btn btn-secondary active" id="unwatchedMoviesButton"> Un-Watched Movies</button>
+    <button type="button" class="btn btn-secondary" id="watchedMoviesButton"> Watched Movies</button>
+    <div class="row" id="showUnwatchedRow"></div>
+    <div class="row hidden" id="showContainerRow"></div>
   </div>
 
   <div id="editForm" class="hidden">
