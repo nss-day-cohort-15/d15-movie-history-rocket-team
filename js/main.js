@@ -9,8 +9,12 @@ var $ = require('jquery'),
 var userId = null;
 
 $(document).on("click", "#navFind", function() {
-  $("#showContainer").toggleClass('hidden');
-  $("#findContainer").toggleClass('hidden');
+  $("#navShow").removeClass('active');
+  $("#navFind").addClass('active');
+
+  $("#showContainer").addClass('hidden');
+  $("#findContainer").removeClass('hidden');
+
 });
 
 // ALL THE FIND FUNCTIONS
@@ -30,6 +34,11 @@ $(document).on("click", "#searchButton", function () {
   });
 });
 
+// REMOVE SEARCHED MOVIE FROM FIND PAGE
+$(document).on("click", ".removeButton", function () {
+  $(this).parent(".movie").remove();
+})
+
 // THIS FUNCTION SAVES A MOVIE TO FIREBASE WITH A UNIQUE ID
 $(document).on("click", ".saveButton", function (e) {
   let movieObj = buildMovieObj(e);
@@ -40,16 +49,22 @@ $(document).on("click", ".saveButton", function (e) {
   });
 });
 
+
 // ALL THE SHOW FUNCTIONS
 // GETS SAVED MOVIES FROM THE FIREBASE AND DISPLAYS THEM
 $(document).on("click", "#navShow", function() {
-  $("#findContainer").toggleClass('hidden');
-  $("#showContainer").toggleClass('hidden');
+  $("#navShow").addClass('active');
+  $("#navFind").removeClass('active');
+
+  $("#showContainer").removeClass('hidden');
+  $("#findContainer").addClass('hidden');
+
   $("#showContainerRow").html("");
   interact.showSavedMovies(userId)
   .then(loadDom);
 });
 
+// DELETE THAT MOVIE FUNCTION
 $(document).on("click", ".deleteButton", function() {
   let deleteKey = $(this).data("deletekey");
   interact.deleteSavedMovie(deleteKey)
@@ -60,11 +75,34 @@ $(document).on("click", ".deleteButton", function() {
   })
 })
 
+// EDITING A MOVIE FUNCTION
+$(document).on("click", ".editButton", function () {
+  let editKey = $(this).data("editkey");
+  let imdbid = $(this).data("imdbId");
+  console.log(this);
+  $("#editForm").removeClass('hidden');
+  $("#showContainer").addClass('hidden');
+  // interact.editSavedMovie(editKey);
+});
+
+$(document).on("click", "#submitEdit", function () {
+  let editedRating = $("#editRating").val();
+  let watchedStatus = $("#editForm").find('input:checkbox:checked').val();
+  if (watchedStatus === "on") {
+    watchedStatus = true;
+  } else {
+    watchedStatus = false;
+  }
+  console.log(editKey);
+  console.log(imdbid);
+
+});
+
+// MAKES SONG OBJECT TO BE SAVED
 function buildMovieObj (e) {
   let movie = $(e.currentTarget).parent(".movie");
   let imdbID = $(e.currentTarget).data("imdbid");
   let watchedStatus = $(movie).find('input:checkbox:checked').val();
-  // Save watchedStatus as a boolean value
   if (watchedStatus === "on") {
     watchedStatus = true;
   } else {
@@ -82,6 +120,7 @@ function buildMovieObj (e) {
   };
 }
 
+//RE-LOADS SAVED SONGS TO DOM
 function loadDom (data) {
     var dataArray = [];
     var imdbArray = [];

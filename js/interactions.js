@@ -5,7 +5,7 @@ var $ = require('jquery');
 var searchMovies = function (movieTitle) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `http://www.omdbapi.com/?t=${movieTitle}&y=&type=movie&r=json`,
+      url: `http://www.omdbapi.com/?t=${movieTitle}&y=&plot=full&type=movie&r=json`,
       type: 'GET'
     }).done(function(data){
       resolve(data);
@@ -16,7 +16,7 @@ var searchMovies = function (movieTitle) {
 var searchMovieByImdbId = function (imdbID) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `http://www.omdbapi.com/?i=${imdbID}&y=&type=movie&r=json`,
+      url: `http://www.omdbapi.com/?i=${imdbID}&y=&plot=full&type=movie&r=json`,
       type: 'GET'
     }).done(function(data){
       resolve(data);

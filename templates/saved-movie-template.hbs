@@ -1,14 +1,54 @@
-<div class="col-sm-4 movie">
-  <button type="button" class="btn btn-success editButton" data-editKey="{{fbId}}">Edit</button>
-  <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{fbId}}">Delete</button>
+<div class="col-md-4 movie">
   <img src="{{Poster}}" alt="{{Title}}"/>
-  <h3>{{Title}}</h3>
-  <ul>
-    <li>{{Year}}</li>
-    <li>{{Actors}}</li>
-  </ul>
+  <marquee class="movieTitle">{{Title}}</marquee>
   <label for="{{imdbID}}-watched">Watched:</label>
   <div name="{{imdbID}}-watched" style="display: inline-block">{{watched}}</div>
   <label for="{{imdbID}}-rating">Rating:</label>
-  <div name="{{imdbID}}-rating" style="display: inline-block">{{rating}}</div>
+  <div name="{{imdbID}}-rating" style="display: inline-block">{{rating}}</div> <br>
+  <button type="button" class="btn btn-success editButton" data-imdbId="{{imdbID}}" data-editKey="{{fbId}}">Edit</button>
+  <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{fbId}}">Delete</button>
+  <div data-spy="scroll" data-target=".nav{{imdbID}}" class="spyScroller">
+
+    <nav class="navbar nav{{imdbID}} navbar-inverse navbar-static">
+      <ul class="nav navbar-nav">
+        <li><a href="#section1{{imdbID}}">Plot</a></li>
+        <li><a href="#section2{{imdbID}}">Actors</a></li>
+        <li><a href="#section3{{imdbID}}">Awards</a></li>
+        <li><a href="#section4{{imdbID}}">Info</a></li>
+    </nav>
+    <div id="scroller">
+
+      <div id="section1{{imdbID}}" class="section1">
+        <p>Plot: </p>
+        <p>{{Plot}}</p>
+      </div>
+
+      <div id="section2{{imdbID}}" class="section2">
+        <p>Starring:</p>
+        <p>{{Actors}}</p>
+      </div>
+
+      <div id=section4{{imdbID}} class="section3">
+        <p>Awards:</p>
+        <p>{{Awards}}</p>
+      </div>
+
+      <div id="section4{{imdbID}}" class="section4">
+        <p>IMDB Rating:</p>
+        <p>{{imdbRating}}</p>
+
+        <p>Director:</p>
+        <p>{{Director}}</p>
+
+        <p>Released:</p>
+        <p>{{Released}}</p>
+
+        <p>Run Time:</p>
+        <p>{{Runtime}}</p>
+
+        <p>Genre:</p>
+        <p>{{Genre}}</p>
+      </div>
+    </div>
+  </div>
 </div>

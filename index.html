@@ -26,15 +26,13 @@
 
 
 
-<!-- Here's where our Find Movies will show up  -->
+<!-- FINDING MUSIC CONTAINER  -->
   <div id="findContainer" class="container">
-    <div class="navbar-form navbar-left" role="search">
-      <div class="form-group">
-        <input type="text" class="form-control" id="searchInput">
-      </div>
-      <button type="submit" id="searchButton" class="btn btn-default">Search</button>
-    </div>
-     <div class="row" id="findContainerRow">
+  <!-- SEARCH BAR AND BUTTON -->
+    <input type="text" id="searchInput">
+    <button type="submit" id="searchButton" class="btn btn-default">Search</button>
+    <div class="row" id="findContainerRow">
+<!-- FIND MOVIES POPULATE HERE -->
     </div>
   </div>
 
@@ -42,9 +40,25 @@
   <div id="showContainer" class="container hidden">
     <h1> Your saved movies</h1>
     <div class="row" id="showContainerRow">
+    <div class="col-md-1"></div>
     </div>
 
   </div>
+
+  <div id="editForm" class="hidden">
+    <label for="editWatched">Watched?</label>
+    <input type="checkbox" name="editWatched" id="editWatched">
+    <label for="editRating">Edit Rating :</label>
+    <select id="editRating">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select> <br>
+    <button type="button" class="btn btn-primary" id="submitEdit"> Save Changes </button>
+  </div>
+
 <script src="dist/app.js"></script>
 </body>
 </html>

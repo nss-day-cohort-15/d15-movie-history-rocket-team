@@ -1,12 +1,13 @@
-<div class="col-sm-4 movie">
+<div class="col-md-4 movie">
   <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Save</button>
-  <button type="button" class="btn btn-danger">Delete</button>
+  <button type="button" class="btn btn-danger removeButton">Delete</button>
   <img src="{{Poster}}" alt="{{Title}}"/>
   <h3>{{Title}}</h3>
-  <ul>
-    <li>{{Year}}</li>
-    <li>{{Actors}}</li>
-  </ul>
+  <div>
+    <div>Year: {{Year}}</div>
+    <div>Starring: {{Actors}}</div>
+    <div>Summary: {{Plot}}</div>
+  </div>
   <label for="{{imdbID}}-watched">Watched:</label>
   <input type="checkbox" name="{{imdbID}}-watched" id="{{imdbID}}-watched"/>
   <label for="{{imdbID}}-rating">Rating:</label>
