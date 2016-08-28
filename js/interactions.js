@@ -51,11 +51,12 @@ var showSavedMovies = function (userId) {
   });
 };
 
-var editSavedMovie = function () {
+var editSavedMovie = function (editMovieObj, editKey) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/`,
-      type: 'PUT'
+      url: `https://rocket-team-movies.firebaseio.com/movies/${editKey}.json`,
+      type: 'PUT',
+      data: JSON.stringify(editMovieObj)
     }).done(function(data){
       resolve(data);
     });

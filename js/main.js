@@ -11,6 +11,7 @@ var userId = null;
 $(document).on("click", "#navFind", function() {
   $("#navShow").removeClass('active');
   $("#navFind").addClass('active');
+  $("#editForm").addClass('hidden');
 
   $("#showContainer").addClass('hidden');
   $("#findContainer").removeClass('hidden');
@@ -57,6 +58,7 @@ $(document).on("click", ".saveButton", function (e) {
 $(document).on("click", "#navShow", function() {
   $("#navShow").addClass('active');
   $("#navFind").removeClass('active');
+  $("#editForm").addClass('hidden');
 
   $("#showContainer").removeClass('hidden');
   $("#findContainer").addClass('hidden');
@@ -68,18 +70,12 @@ $(document).on("click", "#navShow", function() {
 
 // SWITCH WATCHED / UNWATCHED VIEWS
 $(document).on("click", "#watchedMoviesButton", function() {
-  $("#watchMoviesButton").addClass('active');
   $("#showContainerRow").removeClass('hidden');
-
-  $("#unwatchedMoviesButton").removeClass('active');
   $("#showUnwatchedRow").addClass('hidden');
 });
 
 $(document).on("click", "#unwatchedMoviesButton", function() {
-  $("#unwatchMoviesButton").addClass('active');
   $("#showUnwatchedRow").removeClass('hidden');
-
-  $("#watchedMoviesButton").removeClass('active');
   $("#showContainerRow").addClass('hidden');
 });
 
@@ -97,24 +93,43 @@ $(document).on("click", ".deleteButton", function() {
 // EDITING A MOVIE FUNCTION
 $(document).on("click", ".editButton", function () {
   let editKey = $(this).data("editkey");
-  let imdbid = $(this).data("imdbId");
-  console.log(this);
+  let imdbid = $(this).data("imdbid");
+
   $("#editForm").removeClass('hidden');
   $("#showContainer").addClass('hidden');
-  // interact.editSavedMovie(editKey);
+
+  $("#submitEdit").data("imdbid", imdbid);
+  $("#submitEdit").data("editkey", editKey);
 });
 
 $(document).on("click", "#submitEdit", function () {
-  let editedRating = $("#editRating").val();
+
+  let editedRating = $("#editForm").find('select').val();
   let watchedStatus = $("#editForm").find('input:checkbox:checked').val();
+
   if (watchedStatus === "on") {
     watchedStatus = true;
   } else {
     watchedStatus = false;
   }
-  console.log(editKey);
-  console.log(imdbid);
+  let imdbID = $(this).data("imdbid");
+  let uid = userId;
 
+  let editKey = $(this).data("editkey");
+
+  let editMovieObj = {
+    imdbID,
+    watchedStatus,
+    editedRating,
+    uid
+  }
+
+  interact.editSavedMovie(editMovieObj, editKey)
+  .then(function (data) {
+    $("#showContainer").html("");
+    interact.showSavedMovies(userId)
+      .then(loadDom);
+  })
 });
 
 // MAKES SONG OBJECT TO BE SAVED
@@ -164,9 +179,11 @@ function loadDom (data) {
         if(movie.watched === false) {
           $("#showUnwatchedRow").append(savedMovieTemplate(movie));
         } else if (movie.watched === true) {
-        $("#showContainerRow").append(savedMovieTemplate(movie));
-      };
+          $("#showContainerRow").append(savedMovieTemplate(movie));
+        };
       });
+      $("#showContainer").removeClass('hidden');
+      $("#editForm").addClass('hidden');
     });
   };
 
