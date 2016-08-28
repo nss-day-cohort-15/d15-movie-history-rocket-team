@@ -40,7 +40,7 @@ $(document).on("click", "#searchButton", function () {
 // REMOVE SEARCHED MOVIE FROM FIND PAGE
 $(document).on("click", ".removeButton", function () {
   $(this).parent(".movie").remove();
-})
+});
 
 // THIS FUNCTION SAVES A MOVIE TO FIREBASE WITH A UNIQUE ID
 $(document).on("click", ".saveButton", function (e) {
@@ -87,8 +87,8 @@ $(document).on("click", ".deleteButton", function() {
     $("#showContainerRow").html("");
     interact.showSavedMovies(userId)
     .then(loadDom);
-  })
-})
+  });
+});
 
 // EDITING A MOVIE FUNCTION
 $(document).on("click", ".editButton", function () {
@@ -102,9 +102,10 @@ $(document).on("click", ".editButton", function () {
   $("#submitEdit").data("editkey", editKey);
 });
 
+// CLICKING THE SUBMIT BUTTON TO EDIT A SONG
 $(document).on("click", "#submitEdit", function () {
 
-  let editedRating = $("#editForm").find('select').val();
+  let userRating = $("#editForm").find('select').val();
   let watchedStatus = $("#editForm").find('input:checkbox:checked').val();
 
   if (watchedStatus === "on") {
@@ -119,17 +120,20 @@ $(document).on("click", "#submitEdit", function () {
 
   let editMovieObj = {
     imdbID,
+    userRating,
     watchedStatus,
-    editedRating,
     uid
-  }
+  };
 
   interact.editSavedMovie(editMovieObj, editKey)
   .then(function (data) {
-    $("#showContainer").html("");
+    $("#showContainerRow").html("");
+    $("#showUnwatchedRow").html("");
+    $("#showContainer").removeClass('hidden');
+    $("#editForm").addClass('hidden');
     interact.showSavedMovies(userId)
       .then(loadDom);
-  })
+  });
 });
 
 // MAKES SONG OBJECT TO BE SAVED
@@ -154,36 +158,34 @@ function buildMovieObj (e) {
   };
 }
 
-//RE-LOADS SAVED SONGS TO DOM
+//LOADS SAVED SONGS TO DOM
 function loadDom (data) {
-    var dataArray = [];
-    var imdbArray = [];
-    $.each(data, function(key, value) {
-      value.key = key;
-      dataArray.push(value);
-      imdbArray.push(value.imdbID);
-    });
+  var dataArray = [];
+  var imdbArray = [];
+  $.each(data, function(key, value) {
+    value.key = key;
+    dataArray.push(value);
+    imdbArray.push(value.imdbID);
+  });
 
-    interact.getSavedMovies(imdbArray.map((imdbId) => {
-      return interact.searchMovieByImdbId(imdbId);
-    }))
-    .then((data) => {
-      data.forEach((movie, iter) => {
-        movie.fbId = dataArray[iter].key;
-        movie.watched = dataArray[iter].watchedStatus;
-        movie.rating = dataArray[iter].userRating;
-        movie.uid = dataArray[iter].uid;
-      });
-      console.log(data);
-      data.forEach(function (movie) {
-        if(movie.watched === false) {
-          $("#showUnwatchedRow").append(savedMovieTemplate(movie));
-        } else if (movie.watched === true) {
-          $("#showContainerRow").append(savedMovieTemplate(movie));
-        };
-      });
-      $("#showContainer").removeClass('hidden');
-      $("#editForm").addClass('hidden');
+  interact.getSavedMovies(imdbArray.map((imdbId) => {
+    return interact.searchMovieByImdbId(imdbId);
+  }))
+  .then((data) => {
+    data.forEach((movie, iter) => {
+      movie.fbId = dataArray[iter].key;
+      movie.watched = dataArray[iter].watchedStatus;
+      movie.rating = dataArray[iter].userRating;
+      movie.uid = dataArray[iter].uid;
     });
-  };
+    console.log(data);
+    data.forEach(function (movie) {
+      if(movie.watched === false) {
+        $("#showUnwatchedRow").append(savedMovieTemplate(movie));
+      } else if (movie.watched === true) {
+        $("#showContainerRow").append(savedMovieTemplate(movie));
+      }
+    });
+  });
+}
 
