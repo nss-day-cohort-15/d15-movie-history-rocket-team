@@ -12,11 +12,11 @@ Handlebars.registerHelper("select", function(value, options) {
   return options.fn(this)
     .split('\n')
     .map(function(v) {
-      var t = 'value="' + value + '"'
-      return ! RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
+      var t = 'value="' + value + '"';
+      return ! new RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"');
     })
-    .join('\n')
-})
+    .join('\n');
+});
 
 // ALL THE FIND FUNCTIONS
 // THIS IS THE FUNCTION TO SEARCH FOR A MOVIE AND ADD IT TO THE DOM
