@@ -64,6 +64,7 @@ $(document).on("click", ".saveButton", function (e) {
 // SWITCH WATCHED / UNWATCHED MOVIES / UNTRACKED / FAVORITES
 $(document).on("click", "#unwatchedMoviesButton", function() {
 
+  $("#breadcrumbs").text(" > Unwatched");
   $("#showWatchedRow").addClass('hidden');
   $("#showUnwatchedRow").removeClass('hidden');
   $("#showUntrackedRow").addClass('hidden');
@@ -76,6 +77,7 @@ $(document).on("click", "#unwatchedMoviesButton", function() {
 });
 
 $(document).on("click", "#watchedMoviesButton", function() {
+  $("#breadcrumbs").text(" > Watched");
   $("#showWatchedRow").removeClass('hidden');
   $("#showUnwatchedRow").addClass('hidden');
   $("#showUntrackedRow").addClass('hidden');
@@ -88,6 +90,7 @@ $(document).on("click", "#watchedMoviesButton", function() {
 });
 
 $(document).on("click", "#untrackedMoviesButton", function() {
+  $("#breadcrumbs").text(" > Search results");
   $("#showUntrackedRow").removeClass('hidden');
   $("#showUnwatchedRow").addClass('hidden');
   $("#showWatchedRow").addClass('hidden');
@@ -100,6 +103,7 @@ $(document).on("click", "#untrackedMoviesButton", function() {
 });
 
 $(document).on("click", "#favoritesMoviesButton", function() {
+  $("#breadcrumbs").text(" > Favorites");
   $("#showFavoritesRow").removeClass('hidden');
   $("#showUnwatchedRow").addClass('hidden');
   $("#showWatchedRow").addClass('hidden');
