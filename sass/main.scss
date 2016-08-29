@@ -21,3 +21,54 @@ header[role="banner"] {
     }
   }
 }
+
+.movie {
+  width: 350px;
+  height: 800px;
+  border: solid black 1px;
+  margin: 5px;
+  img {
+    margin: 5px;
+    height: 445px;
+  }
+}
+
+.movieTitle {
+  font-size: 1.25em;
+  animation: blink-animation .5s steps(5, start) infinite;
+}
+
+#scroller {
+  height: 250px;
+  overflow-y: auto;
+  div {
+    margin: 0px;
+    padding: 2px;
+  }
+}
+
+.section1 {
+  background-color: goldenrod;
+  color: #000;
+}
+.section2 {
+ background-color: #000099;
+ color: white;
+}
+
+#editForm {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}

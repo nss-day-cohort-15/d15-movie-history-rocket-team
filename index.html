@@ -12,11 +12,8 @@
   <nav id="navbar-primary" class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-        <ul class="nav navbar-nav nav-pills"">
-          <li class="active" id="navFind"><a href="#">Find movies</a></li>
-          <li id="navShow"><a href="#">Show Movies</a></li>
-          <li><a href="#">Login</a></li>
-        </ul>
+        <input type="text" id="searchInput">
+        <a href="#">Login</a>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -24,27 +21,20 @@
 
 <!-- Nav bar ends here  -->
 
-
-
-<!-- Here's where our Find Movies will show up  -->
-  <div id="findContainer" class="container">
-    <div class="navbar-form navbar-left" role="search">
-      <div class="form-group">
-        <input type="text" class="form-control" id="searchInput">
-      </div>
-      <button type="submit" id="searchButton" class="btn btn-default">Search</button>
-    </div>
-     <div class="row" id="findContainerRow">
-    </div>
-  </div>
-
 <!-- Here's where our Show Movies will show up  -->
-  <div id="showContainer" class="container hidden">
-    <h1> Your saved movies</h1>
-    <div class="row" id="showContainerRow">
-    </div>
+  <div id="showContainer" class="container">
+    <h1> Movie History<span id="breadcrumbs"></span></h1>
+    <button type="button" class="btn btn-primary" id="untrackedMoviesButton"> Untracked Movies</button>
+    <button type="button" class="btn" id="unwatchedMoviesButton"> Unwatched Movies</button>
+    <button type="button" class="btn" id="watchedMoviesButton"> Watched Movies</button>
+    <button type="button" class="btn" id="favoritesMoviesButton"> Favorites</button>
 
+    <div class="row" id="showUntrackedRow"></div>
+    <div class="row hidden" id="showUnwatchedRow"></div>
+    <div class="row hidden" id="showWatchedRow"></div>
+    <div class="row hidden" id="showFavoritesRow"></div>
   </div>
+
 <script src="dist/app.js"></script>
 </body>
 </html>

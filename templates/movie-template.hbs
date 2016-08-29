@@ -1,20 +1,21 @@
-<div class="col-sm-4 movie">
-  <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Save</button>
-  <button type="button" class="btn btn-danger">Delete</button>
+<div class="col-md-4 movie">
   <img src="{{Poster}}" alt="{{Title}}"/>
-  <h3>{{Title}}</h3>
-  <ul>
-    <li>{{Year}}</li>
-    <li>{{Actors}}</li>
-  </ul>
-  <label for="{{imdbID}}-watched">Watched:</label>
-  <input type="checkbox" name="{{imdbID}}-watched" id="{{imdbID}}-watched"/>
-  <label for="{{imdbID}}-rating">Rating:</label>
-  <select id="{{imdbID}}-rating" value={{userRating}}>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-  </select>
+  <marquee class="movieTitle">{{Title}}</marquee>
+
+  <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Add to Watchlist</button>
+
+  <button type="button" class="btn btn-danger removeButton">Remove</button> <br>
+
+  <div id="scroller">
+    <div id="section1{{imdbID}}" class="section1">
+      <p>Starring:</p>
+      <p>{{Actors}}</p>
+    </div>
+
+    <div id="section2{{imdbID}}" class="section2">
+      <p>Released:</p>
+      <p>{{Released}}</p>
+    </div>
+  </div>
+
 </div>

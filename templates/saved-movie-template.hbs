@@ -1,14 +1,36 @@
-<div class="col-sm-4 movie">
-  <button type="button" class="btn btn-success editButton" data-editKey="{{fbId}}">Edit</button>
-  <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{fbId}}">Delete</button>
+<div class="col-md-4 movie">
   <img src="{{Poster}}" alt="{{Title}}"/>
-  <h3>{{Title}}</h3>
-  <ul>
-    <li>{{Year}}</li>
-    <li>{{Actors}}</li>
-  </ul>
-  <label for="{{imdbID}}-watched">Watched:</label>
-  <div name="{{imdbID}}-watched" style="display: inline-block">{{watched}}</div>
+  <marquee class="movieTitle">{{Title}}</marquee>
+
+  <button type="button" class="btn btn-danger deleteButton" data-deleteKey="{{fbId}}">Delete</button>
+
+  <div id="scroller">
+    <div id="section1{{imdbID}}" class="section1">
+      <p>Starring:</p>
+      <p>{{Actors}}</p>
+    </div>
+
+    <div id="section2{{imdbID}}" class="section2">
+      <p>Released:</p>
+      <p>{{Released}}</p>
+    </div>
+  </div>
+
   <label for="{{imdbID}}-rating">Rating:</label>
-  <div name="{{imdbID}}-rating" style="display: inline-block">{{rating}}</div>
+  <select id="{{imdbID}}-rating" value="{{userRating}}" class="editMovie" data-imdbid="{{imdbID}}" data-editKey="{{fbId}}">
+
+    {{#select value}}
+    <option value="0"></option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    {{/select}}
+  </select>
 </div>

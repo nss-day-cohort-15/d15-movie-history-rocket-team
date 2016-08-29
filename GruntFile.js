@@ -20,7 +20,6 @@ module.exports = function(grunt) {
         globalstrict: true,
         globals: {"js": true},
         browserify: true,
-        jquery: true,
         devel: true
       },
       files: ['js/**/*.js']
@@ -42,5 +41,5 @@ module.exports = function(grunt) {
 });
 
 require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-grunt.registerTask('default', ['browserify', 'sass', 'watch']);
+grunt.registerTask('default', ['browserify', 'jshint', 'sass', 'watch']);
 }
