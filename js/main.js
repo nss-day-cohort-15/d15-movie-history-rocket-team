@@ -8,11 +8,16 @@ var $ = require('jquery'),
 
 var userId = null;
 
-Handlebars.registerHelper('select', function( value, options ){
-  var $el = $('<select />').html( options.fn(this) );
-  $el.find('[value="' + value + '"]').attr({'selected':'selected'});
-  return $el.html();
-});
+Handlebars.registerHelper("select", function(value, options) {
+  return options.fn(this)
+    .split('\n')
+    .map(function(v) {
+      var t = 'value="' + value + '"'
+      return ! RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
+    })
+    .join('\n')
+})
+
 // ALL THE FIND FUNCTIONS
 // THIS IS THE FUNCTION TO SEARCH FOR A MOVIE AND ADD IT TO THE DOM
 $(document).on("keypress", "#searchInput", function (e) {
@@ -109,11 +114,13 @@ $(document).on("click", "#favoritesMoviesButton", function() {
 // EDITING A MOVIE FUNCITON
 $(document).on("change", ".editMovie", function () {
 
+  var watchedStatus;
+
   let userRating = $(this).val();
   if (userRating) {
-    var watchedStatus = true;
+    watchedStatus = true;
   } else {
-    var watchedStatus = false;
+    watchedStatus = false;
   }
 
   let imdbID = $(this).data("imdbid");
@@ -203,7 +210,7 @@ function loadDom (data) {
       console.log(movie);
     });
   });
-};
+}
 
 interact.showSavedMovies(userId)
 .then(loadDom);
