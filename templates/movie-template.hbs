@@ -1,10 +1,9 @@
 <div class="col-md-4 movie">
+ <button type="button" class="btn btn-danger removeButton">Remove</button>
+  <div class="clearFix">
+  </div>
   <img src="{{Poster}}" alt="{{Title}}"/>
   <marquee class="movieTitle">{{Title}}</marquee>
-
-  <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Add to Watchlist</button>
-
-  <button type="button" class="btn btn-danger removeButton">Remove</button> <br>
 
   <div id="scroller">
     <div id="section1{{imdbID}}" class="section1">
@@ -17,5 +16,5 @@
       <p>{{Released}}</p>
     </div>
   </div>
-
+  <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Add to Watchlist</button>
 </div>
