@@ -12,11 +12,8 @@
   <nav id="navbar-primary" class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-        <ul class="nav navbar-nav nav-pills"">
-          <li class="active" id="navFind"><a href="#">Find movies</a></li>
-          <li id="navShow"><a href="#">Show Movies</a></li>
-          <li><a href="#">Login</a></li>
-        </ul>
+        <input type="text" id="searchInput">
+        <a href="#">Login</a>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -24,39 +21,18 @@
 
 <!-- Nav bar ends here  -->
 
-
-
-<!-- FINDING MUSIC CONTAINER  -->
-  <div id="findContainer" class="container">
-  <!-- SEARCH BAR AND BUTTON -->
-    <input type="text" id="searchInput">
-    <button type="submit" id="searchButton" class="btn btn-default">Search</button>
-    <div class="row" id="findContainerRow">
-<!-- FIND MOVIES POPULATE HERE -->
-    </div>
-  </div>
-
 <!-- Here's where our Show Movies will show up  -->
-  <div id="showContainer" class="container hidden">
-    <h1> Your saved movies</h1>
-    <button type="button" class="btn btn-secondary" id="unwatchedMoviesButton"> Un-Watched Movies</button>
-    <button type="button" class="btn btn-secondary" id="watchedMoviesButton"> Watched Movies</button>
-    <div class="row" id="showUnwatchedRow"></div>
-    <div class="row hidden" id="showContainerRow"></div>
-  </div>
+  <div id="showContainer" class="container">
+    <h1> Movie History<span id="breadcrumbs"></span></h1>
+    <button type="button" class="btn btn-primary" id="untrackedMoviesButton"> Untracked Movies</button>
+    <button type="button" class="btn" id="unwatchedMoviesButton"> Unwatched Movies</button>
+    <button type="button" class="btn" id="watchedMoviesButton"> Watched Movies</button>
+    <button type="button" class="btn" id="favoritesMoviesButton"> Favorites</button>
 
-  <div id="editForm" class="hidden">
-    <label for="editWatched">Watched?</label>
-    <input type="checkbox" name="editWatched" id="editWatched">
-    <label for="editRating">Edit Rating :</label>
-    <select id="editRating">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select> <br>
-    <button type="button" class="btn btn-primary" id="submitEdit" data-editKey="" data-imdbid=""> Save Changes </button>
+    <div class="row" id="showUntrackedRow"></div>
+    <div class="row hidden" id="showUnwatchedRow"></div>
+    <div class="row hidden" id="showWatchedRow"></div>
+    <div class="row hidden" id="showFavoritesRow"></div>
   </div>
 
 <script src="dist/app.js"></script>

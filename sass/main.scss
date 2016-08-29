@@ -38,16 +38,8 @@ header[role="banner"] {
   animation: blink-animation .5s steps(5, start) infinite;
 }
 
-.spyScroller {
-  height: 200px;
-}
-
-.navbar {
-  margin: 0px;
-}
-
 #scroller {
-  height: 90%;
+  height: 250px;
   overflow-y: auto;
   div {
     margin: 0px;
@@ -56,20 +48,12 @@ header[role="banner"] {
 }
 
 .section1 {
-  background-color: #FFF;
+  background-color: goldenrod;
   color: #000;
 }
 .section2 {
  background-color: #000099;
  color: white;
-}
-.section3 {
-  background-color: firebrick;
-  color: white;
-}
-.section4 {
-  background-color: goldenrod;
-  color: white;
 }
 
 #editForm {

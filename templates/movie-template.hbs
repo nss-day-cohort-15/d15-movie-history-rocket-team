@@ -1,61 +1,21 @@
 <div class="col-md-4 movie">
   <img src="{{Poster}}" alt="{{Title}}"/>
   <marquee class="movieTitle">{{Title}}</marquee>
-  <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Save</button>
-  <button type="button" class="btn btn-danger removeButton">Delete</button> <br>
-  <label for="{{imdbID}}-watched">Watched:</label>
-  <input type="checkbox" name="{{imdbID}}-watched" id="{{imdbID}}-watched"/>
-  <label for="{{imdbID}}-rating">Rating:</label>
-  <select id="{{imdbID}}-rating" value={{userRating}}>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-  </select>
 
-  <div data-spy="scroll" data-target=".nav{{imdbID}}" class="spyScroller">
-    <nav class="navbar nav{{imdbID}} navbar-inverse navbar-static">
-      <ul class="nav navbar-nav">
-        <li><a href="#section1{{imdbID}}">Plot</a></li>
-        <li><a href="#section2{{imdbID}}">Actors</a></li>
-        <li><a href="#section3{{imdbID}}">Awards</a></li>
-        <li><a href="#section4{{imdbID}}">Info</a></li>
-        </ul>
-    </nav>
+  <button type="button" class="btn btn-success saveButton" data-imdbid="{{imdbID}}">Add to Watchlist</button>
+
+  <button type="button" class="btn btn-danger removeButton">Remove</button> <br>
+
   <div id="scroller">
+    <div id="section1{{imdbID}}" class="section1">
+      <p>Starring:</p>
+      <p>{{Actors}}</p>
+    </div>
 
-      <div id="section1{{imdbID}}" class="section1">
-        <p>Plot: </p>
-        <p>{{Plot}}</p>
-      </div>
-
-      <div id="section2{{imdbID}}" class="section2">
-        <p>Starring:</p>
-        <p>{{Actors}}</p>
-      </div>
-
-      <div id=section4{{imdbID}} class="section3">
-        <p>Awards:</p>
-        <p>{{Awards}}</p>
-      </div>
-
-      <div id="section4{{imdbID}}" class="section4">
-        <p>IMDB Rating:</p>
-        <p>{{imdbRating}}</p>
-
-        <p>Director:</p>
-        <p>{{Director}}</p>
-
-        <p>Released:</p>
-        <p>{{Released}}</p>
-
-        <p>Run Time:</p>
-        <p>{{Runtime}}</p>
-
-        <p>Genre:</p>
-        <p>{{Genre}}</p>
-      </div>
+    <div id="section2{{imdbID}}" class="section2">
+      <p>Released:</p>
+      <p>{{Released}}</p>
     </div>
   </div>
+
 </div>

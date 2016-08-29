@@ -8,33 +8,30 @@ var $ = require('jquery'),
 
 var userId = null;
 
-$(document).on("click", "#navFind", function() {
-  $("#navShow").removeClass('active');
-  $("#navFind").addClass('active');
-  $("#editForm").addClass('hidden');
-
-  $("#showContainer").addClass('hidden');
-  $("#findContainer").removeClass('hidden');
-
+Handlebars.registerHelper('select', function( value, options ){
+  var $el = $('<select />').html( options.fn(this) );
+  $el.find('[value="' + value + '"]').attr({'selected':'selected'});
+  return $el.html();
 });
-
 // ALL THE FIND FUNCTIONS
 // THIS IS THE FUNCTION TO SEARCH FOR A MOVIE AND ADD IT TO THE DOM
-$(document).on("click", "#searchButton", function () {
+$(document).on("keypress", "#searchInput", function (e) {
   //Validating a movie title
-  if(!$("#searchInput").val()) {
-    return alert("You need to enter a movie title");
+  if (e.keyCode == 13) {
+    if(!$("#searchInput").val()) {
+      return alert("You need to enter a movie title");
+    }
+    let movieTitle = $("#searchInput").val();
+    interact.searchMovies(movieTitle)
+    .then(function (data) {
+      console.log(data);
+      data.userRating = 0;
+        if(data.Response === "False" || data.Actors === "N/A"){
+          return alert("No Movie Found!");
+        }
+      $("#showUntrackedRow").append(movieTemplate(data));
+    });
   }
-  let movieTitle = $("#searchInput").val();
-  interact.searchMovies(movieTitle)
-  .then(function (data) {
-    console.log(data);
-    data.userRating = 0;
-      if(data.Response === "False" || data.Actors === "N/A"){
-        return alert("No Movie Found!");
-      }
-    $("#findContainerRow").append(movieTemplate(data));
-  });
 });
 
 // REMOVE SEARCHED MOVIE FROM FIND PAGE
@@ -45,74 +42,80 @@ $(document).on("click", ".removeButton", function () {
 // THIS FUNCTION SAVES A MOVIE TO FIREBASE WITH A UNIQUE ID
 $(document).on("click", ".saveButton", function (e) {
   let movieObj = buildMovieObj(e);
+  $(this).parent(".movie").remove();
   interact.saveMovie(movieObj)
   .then(function (data) {
-    console.log("Your song has been saved!");
-    $(this).remove();
+    $("#showWatchedRow").html("");
+    $("#showUnwatchedRow").html("");
+    $("#showFavoritesRow").html("");
+    interact.showSavedMovies(userId)
+      .then(loadDom);
   });
 });
 
 
 // ALL THE SHOW FUNCTIONS
-// GETS SAVED MOVIES FROM THE FIREBASE AND DISPLAYS THEM
-$(document).on("click", "#navShow", function() {
-  $("#navShow").addClass('active');
-  $("#navFind").removeClass('active');
-  $("#editForm").addClass('hidden');
 
-  $("#showContainer").removeClass('hidden');
-  $("#findContainer").addClass('hidden');
-
-  $("#showContainerRow").html("");
-  interact.showSavedMovies(userId)
-  .then(loadDom);
-});
-
-// SWITCH WATCHED / UNWATCHED VIEWS
-$(document).on("click", "#watchedMoviesButton", function() {
-  $("#showContainerRow").removeClass('hidden');
-  $("#showUnwatchedRow").addClass('hidden');
-});
-
+// SWITCH WATCHED / UNWATCHED MOVIES / UNTRACKED / FAVORITES
 $(document).on("click", "#unwatchedMoviesButton", function() {
+
+  $("#showWatchedRow").addClass('hidden');
   $("#showUnwatchedRow").removeClass('hidden');
-  $("#showContainerRow").addClass('hidden');
+  $("#showUntrackedRow").addClass('hidden');
+  $("#showFavoritesRow").addClass('hidden');
+
+  $("#unwatchedMoviesButton").addClass('btn-primary');
+  $("#watchedMoviesButton").removeClass('btn-primary');
+  $("#untrackedMoviesButton").removeClass('btn-primary');
+  $("#favoritesMoviesButton").removeClass('btn-primary');
 });
 
-// DELETE THAT MOVIE FUNCTION
-$(document).on("click", ".deleteButton", function() {
-  let deleteKey = $(this).data("deletekey");
-  interact.deleteSavedMovie(deleteKey)
-  .then(function(data) {
-    $("#showContainerRow").html("");
-    interact.showSavedMovies(userId)
-    .then(loadDom);
-  });
+$(document).on("click", "#watchedMoviesButton", function() {
+  $("#showWatchedRow").removeClass('hidden');
+  $("#showUnwatchedRow").addClass('hidden');
+  $("#showUntrackedRow").addClass('hidden');
+  $("#showFavoritesRow").addClass('hidden');
+
+  $("#watchedMoviesButton").addClass('btn-primary');
+  $("#unwatchedMoviesButton").removeClass('btn-primary');
+  $("#untrackedMoviesButton").removeClass('btn-primary');
+  $("#favoritesMoviesButton").removeClass('btn-primary');
 });
 
-// EDITING A MOVIE FUNCTION
-$(document).on("click", ".editButton", function () {
-  let editKey = $(this).data("editkey");
-  let imdbid = $(this).data("imdbid");
+$(document).on("click", "#untrackedMoviesButton", function() {
+  $("#showUntrackedRow").removeClass('hidden');
+  $("#showUnwatchedRow").addClass('hidden');
+  $("#showWatchedRow").addClass('hidden');
+  $("#showFavoritesRow").addClass('hidden');
 
-  $("#editForm").removeClass('hidden');
-  $("#showContainer").addClass('hidden');
-
-  $("#submitEdit").data("imdbid", imdbid);
-  $("#submitEdit").data("editkey", editKey);
+  $("#untrackedMoviesButton").addClass('btn-primary');
+  $("#unwatchedMoviesButton").removeClass('btn-primary');
+  $("#watchedMoviesButton").removeClass('btn-primary');
+  $("#favoritesMoviesButton").removeClass('btn-primary');
 });
 
-// CLICKING THE SUBMIT BUTTON TO EDIT A SONG
-$(document).on("click", "#submitEdit", function () {
+$(document).on("click", "#favoritesMoviesButton", function() {
+  $("#showFavoritesRow").removeClass('hidden');
+  $("#showUnwatchedRow").addClass('hidden');
+  $("#showWatchedRow").addClass('hidden');
+  $("#showUntrackedRow").addClass('hidden');
 
-  let userRating = $("#editForm").find('select').val();
-  let watchedStatus = $("#editForm").find('input:checkbox:checked').val();
+  $("#favoritesMoviesButton").addClass('btn-primary');
+  $("#watchedMoviesButton").removeClass('btn-primary');
+  $("#unwatchedMoviesButton").removeClass('btn-primary');
+  $("#untrackedMoviesButton").removeClass('btn-primary');
+});
 
-  if (watchedStatus === "on") {
-    watchedStatus = true;
+// EDITING A MOVIE FUNCITON
+$(document).on("change", ".editMovie", function () {
+
+  let userRating = $(this).val();
+  if (userRating) {
+    var watchedStatus = true;
   } else {
-    watchedStatus = false;
+    var watchedStatus = false;
   }
+
   let imdbID = $(this).data("imdbid");
   let uid = userId;
 
@@ -127,12 +130,24 @@ $(document).on("click", "#submitEdit", function () {
 
   interact.editSavedMovie(editMovieObj, editKey)
   .then(function (data) {
-    $("#showContainerRow").html("");
+    $("#showWatchedRow").html("");
     $("#showUnwatchedRow").html("");
-    $("#showContainer").removeClass('hidden');
-    $("#editForm").addClass('hidden');
+    $("#showFavoritesRow").html("");
     interact.showSavedMovies(userId)
       .then(loadDom);
+  });
+});
+
+// DELETE THAT MOVIE FUNCTION
+$(document).on("click", ".deleteButton", function() {
+  let deleteKey = $(this).data("deletekey");
+  interact.deleteSavedMovie(deleteKey)
+  .then(function(data) {
+    $("#showWatchedRow").html("");
+    $("#showUnwatchedRow").html("");
+    $("#showFavoritesRow").html("");
+    interact.showSavedMovies(userId)
+    .then(loadDom);
   });
 });
 
@@ -147,7 +162,7 @@ function buildMovieObj (e) {
     watchedStatus = false;
   }
 
-  let userRating = $(movie).find('select').val();
+  let userRating = 0;
   let uid = userId;
 
   return {
@@ -175,17 +190,21 @@ function loadDom (data) {
     data.forEach((movie, iter) => {
       movie.fbId = dataArray[iter].key;
       movie.watched = dataArray[iter].watchedStatus;
-      movie.rating = dataArray[iter].userRating;
+      movie.userRating = dataArray[iter].userRating;
       movie.uid = dataArray[iter].uid;
-    });
-    console.log(data);
-    data.forEach(function (movie) {
+
       if(movie.watched === false) {
         $("#showUnwatchedRow").append(savedMovieTemplate(movie));
+      } else if (movie.userRating === "10") {
+        $("#showFavoritesRow").append(savedMovieTemplate(movie));
       } else if (movie.watched === true) {
-        $("#showContainerRow").append(savedMovieTemplate(movie));
+        $("#showWatchedRow").append(savedMovieTemplate(movie));
       }
+      console.log(movie);
     });
   });
-}
+};
+
+interact.showSavedMovies(userId)
+.then(loadDom);
 
