@@ -13,7 +13,7 @@
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbar-primary-collapse">
         <input type="text" id="searchInput">
-        <a href="#">Login</a>
+        <button type="button" class="btn btn-primary" id="loginButton">Login</button>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -25,9 +25,9 @@
   <div id="showContainer" class="container">
     <h1> Movie History<span id="breadcrumbs"></span></h1>
     <button type="button" class="btn btn-primary" id="untrackedMoviesButton"> Untracked Movies</button>
-    <button type="button" class="btn" id="unwatchedMoviesButton"> Unwatched Movies</button>
-    <button type="button" class="btn" id="watchedMoviesButton"> Watched Movies</button>
-    <button type="button" class="btn" id="favoritesMoviesButton"> Favorites</button>
+    <button type="button" class="btn" id="unwatchedMoviesButton" disabled> Unwatched Movies</button>
+    <button type="button" class="btn" id="watchedMoviesButton" disabled> Watched Movies</button>
+    <button type="button" class="btn" id="favoritesMoviesButton" disabled> Favorites</button>
 
     <div class="row" id="showUntrackedRow"></div>
     <div class="row hidden" id="showUnwatchedRow"></div>

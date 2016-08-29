@@ -1,6 +1,7 @@
 "use strict";
 
 var $ = require('jquery'),
+    login = require('./user'),
     Handlebars = require('hbsfy/runtime'),
     movieTemplate = require('../templates/movie-template.hbs'),
     savedMovieTemplate = require('../templates/saved-movie-template.hbs'),
@@ -16,6 +17,20 @@ Handlebars.registerHelper("select", function(value, options) {
       return ! new RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"');
     })
     .join('\n');
+});
+
+// USER LOGIN
+$(document).on("click", "#loginButton", function () {
+  login()
+  .then(function(data) {
+    userId = data.user.uid;
+    $("#unwatchedMoviesButton, #watchedMoviesButton, #favoritesMoviesButton").removeAttr("disabled");
+    $("#showWatchedRow").html("");
+    $("#showUnwatchedRow").html("");
+    $("#showFavoritesRow").html("");
+    interact.showSavedMovies(userId)
+      .then(loadDom);
+  });
 });
 
 // ALL THE FIND FUNCTIONS
@@ -215,7 +230,4 @@ function loadDom (data) {
     });
   });
 }
-
-interact.showSavedMovies(userId)
-.then(loadDom);
 

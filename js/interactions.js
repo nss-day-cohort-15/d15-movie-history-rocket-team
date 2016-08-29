@@ -43,7 +43,7 @@ var saveMovie = function (movieObj) {
 var showSavedMovies = function (userId) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/movies.json`,
+      url: `https://rocket-team-movies.firebaseio.com/movies.json?orderBy="uid"&equalTo="${userId}"`,
       type: 'GET'
     }).done(function(data){
       resolve(data);
