@@ -10,6 +10,19 @@ header[role="banner"] {
   padding: 5px;
 }
 
+#noMovies {
+  text-align: center;
+  font-size: 1.3em;
+  margin: auto;
+}
+
+#noFaves {
+  text-align: center;
+  font-size: 1.3em;
+  margin: auto;
+  color: goldenrod;
+}
+
 .movie {
   width: 350px;
   height: 800px;
@@ -27,7 +40,6 @@ header[role="banner"] {
 }
 
 #scroller {
-  height: 250px;
   overflow-y: auto;
   div {
     margin: 0px;
@@ -44,9 +56,13 @@ header[role="banner"] {
  color: white;
 }
 
-#editForm {
-  text-align: center;
-  font-size: 1.5em;
+.deleteButton, .removeButton {
+  float: right;
+
+}
+
+.clearFix {
+  clear: both;
 }
 
 @keyframes blink-animation {

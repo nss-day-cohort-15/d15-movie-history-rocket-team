@@ -33,13 +33,15 @@ $(document).on("click", "#loginButton", function () {
       .then(function () {
         $("#loginButton").addClass('hidden');
         $("#logoutButton").removeClass('hidden');
-      })
+        checkEmptyMovies();
+
+      });
   });
 });
 
 $(document).on("click", "#logoutButton", function () {
   location.reload();
-})
+});
 
 // ALL THE FIND FUNCTIONS
 // THIS IS THE FUNCTION TO SEARCH FOR A MOVIE AND ADD IT TO THE DOM
@@ -50,6 +52,7 @@ $(document).on("keypress", "#searchInput", function (e) {
       return alert("You need to enter a movie title");
     }
     let movieTitle = $("#searchInput").val();
+    $("#noMovies").remove();
     interact.searchMovies(movieTitle)
     .then(function (data) {
       let checkImdbid = data.imdbID;
@@ -103,6 +106,7 @@ $(document).on("click", ".saveButton", function (e) {
 // SWITCH WATCHED / UNWATCHED MOVIES / UNTRACKED / FAVORITES
 
 $(document).on("click", "#untrackedMoviesButton", function() {
+  checkEmptyMovies();
   $("#breadcrumbs").text(" > Search results");
 
   $("#showUntrackedRow").removeClass('hidden');
@@ -117,7 +121,7 @@ $(document).on("click", "#untrackedMoviesButton", function() {
 });
 
 $(document).on("click", "#unwatchedMoviesButton", function() {
-
+  checkEmptyMovies();
   $("#breadcrumbs").text(" > Unwatched Movies");
 
   $("#showWatchedRow").addClass('hidden');
@@ -132,13 +136,12 @@ $(document).on("click", "#unwatchedMoviesButton", function() {
 });
 
 $(document).on("click", "#watchedMoviesButton", function() {
+  checkEmptyMovies();
   $("#breadcrumbs").text(" > Watched Movies");
-
   $("#showWatchedRow").removeClass('hidden');
   $("#showUnwatchedRow").addClass('hidden');
   $("#showUntrackedRow").addClass('hidden');
   $("#showFavoritesRow").addClass('hidden');
-
   $("#watchedMoviesButton").addClass('btn-primary');
   $("#unwatchedMoviesButton").removeClass('btn-primary');
   $("#untrackedMoviesButton").removeClass('btn-primary');
@@ -146,6 +149,7 @@ $(document).on("click", "#watchedMoviesButton", function() {
 });
 
 $(document).on("click", "#favoritesMoviesButton", function() {
+  checkEmptyMovies();
   $("#breadcrumbs").text(" > Favorites");
 
   $("#showFavoritesRow").removeClass('hidden');
@@ -242,6 +246,8 @@ function loadDom (data) {
     return interact.searchMovieByImdbId(imdbId);
   }))
   .then((data) => {
+
+
     data.forEach((movie, iter) => {
       movie.fbId = dataArray[iter].key;
       movie.watched = dataArray[iter].watchedStatus;
@@ -258,5 +264,18 @@ function loadDom (data) {
       console.log(movie);
     });
   });
+      checkEmptyMovies();
 }
+    function checkEmptyMovies () {
+    $("#noMovies").remove();
+    if (!($("#showContainer").children(".row").children(".movie").length)) {
+      $("#showUntrackedRow").append(`<p id="noMovies">:-( You don't have any movies. To add a movie, search for the title above. </p>`);
+    }
+    $("#noFaves").remove();
+    if (!($("#showFavoritesRow").children(".movie").length)) {
 
+     $("#showFavoritesRow").append(`<p id="noFaves">:-( You don't like anything. You have to give a movie a 10 to create a favorite. </p>`);
+    }
+};
+
+  checkEmptyMovies();
