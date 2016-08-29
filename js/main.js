@@ -29,9 +29,17 @@ $(document).on("click", "#loginButton", function () {
     $("#showUnwatchedRow").html("");
     $("#showFavoritesRow").html("");
     interact.showSavedMovies(userId)
-      .then(loadDom);
+      .then(loadDom)
+      .then(function () {
+        $("#loginButton").addClass('hidden');
+        $("#logoutButton").removeClass('hidden');
+      })
   });
 });
+
+$(document).on("click", "#logoutButton", function () {
+  location.reload();
+})
 
 // ALL THE FIND FUNCTIONS
 // THIS IS THE FUNCTION TO SEARCH FOR A MOVIE AND ADD IT TO THE DOM
@@ -44,12 +52,28 @@ $(document).on("keypress", "#searchInput", function (e) {
     let movieTitle = $("#searchInput").val();
     interact.searchMovies(movieTitle)
     .then(function (data) {
-      console.log(data);
+      let checkImdbid = data.imdbID;
+      let duplicateMovie = $(`select[data-imdbid='${checkImdbid}']`).parent(".movie");
+      if(duplicateMovie.length) {
+        let showRow = duplicateMovie.parent(".row");
+        let rowPartner = showRow.data("partner");
+        let partnerBreadcrumb = $(`#${rowPartner}`).data("breadcrumb");
+
+        showRow.removeClass('hidden');
+        showRow.siblings('.row').addClass("hidden");
+
+        $(`#${rowPartner}`).addClass('btn-primary');
+        $(`#${rowPartner}`).siblings(".btn").removeClass('btn-primary');
+
+        $("#breadcrumbs").text(`${partnerBreadcrumb}`);
+
+      } else {
       data.userRating = 0;
         if(data.Response === "False" || data.Actors === "N/A"){
           return alert("No Movie Found!");
         }
       $("#showUntrackedRow").append(movieTemplate(data));
+      }
     });
   }
 });
@@ -77,9 +101,25 @@ $(document).on("click", ".saveButton", function (e) {
 // ALL THE SHOW FUNCTIONS
 
 // SWITCH WATCHED / UNWATCHED MOVIES / UNTRACKED / FAVORITES
+
+$(document).on("click", "#untrackedMoviesButton", function() {
+  $("#breadcrumbs").text(" > Search results");
+
+  $("#showUntrackedRow").removeClass('hidden');
+  $("#showUnwatchedRow").addClass('hidden');
+  $("#showWatchedRow").addClass('hidden');
+  $("#showFavoritesRow").addClass('hidden');
+
+  $("#untrackedMoviesButton").addClass('btn-primary');
+  $("#unwatchedMoviesButton").removeClass('btn-primary');
+  $("#watchedMoviesButton").removeClass('btn-primary');
+  $("#favoritesMoviesButton").removeClass('btn-primary');
+});
+
 $(document).on("click", "#unwatchedMoviesButton", function() {
 
-  $("#breadcrumbs").text(" > Unwatched");
+  $("#breadcrumbs").text(" > Unwatched Movies");
+
   $("#showWatchedRow").addClass('hidden');
   $("#showUnwatchedRow").removeClass('hidden');
   $("#showUntrackedRow").addClass('hidden');
@@ -92,7 +132,8 @@ $(document).on("click", "#unwatchedMoviesButton", function() {
 });
 
 $(document).on("click", "#watchedMoviesButton", function() {
-  $("#breadcrumbs").text(" > Watched");
+  $("#breadcrumbs").text(" > Watched Movies");
+
   $("#showWatchedRow").removeClass('hidden');
   $("#showUnwatchedRow").addClass('hidden');
   $("#showUntrackedRow").addClass('hidden');
@@ -104,21 +145,9 @@ $(document).on("click", "#watchedMoviesButton", function() {
   $("#favoritesMoviesButton").removeClass('btn-primary');
 });
 
-$(document).on("click", "#untrackedMoviesButton", function() {
-  $("#breadcrumbs").text(" > Search results");
-  $("#showUntrackedRow").removeClass('hidden');
-  $("#showUnwatchedRow").addClass('hidden');
-  $("#showWatchedRow").addClass('hidden');
-  $("#showFavoritesRow").addClass('hidden');
-
-  $("#untrackedMoviesButton").addClass('btn-primary');
-  $("#unwatchedMoviesButton").removeClass('btn-primary');
-  $("#watchedMoviesButton").removeClass('btn-primary');
-  $("#favoritesMoviesButton").removeClass('btn-primary');
-});
-
 $(document).on("click", "#favoritesMoviesButton", function() {
   $("#breadcrumbs").text(" > Favorites");
+
   $("#showFavoritesRow").removeClass('hidden');
   $("#showUnwatchedRow").addClass('hidden');
   $("#showWatchedRow").addClass('hidden');

@@ -10,12 +10,18 @@
   <header role="banner">
     <img id="logo-main" src="https://f4.bcbits.com/img/a3357501286_5.jpg" width="200" height="150" alt="Tunnel Snakes movie database">
   <nav id="navbar-primary" class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-        <input type="text" id="searchInput">
-        <button type="button" class="btn btn-primary" id="loginButton">Login</button>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-push-1" id="navHolder">
+          <div class ="row">
+            <label class="col-md-push-3 col-md-2"> Search: </label>
+            <input type="text" class="col-md-4 col-md-push-2" id="searchInput" name="searchInput"  placeholder="Search OMDb and your tracked movies" style="display: inline-block">
+            <button type="button" class="btn btn-primary col-md-1 col-md-push-3" style="display: inline-block" id="loginButton">Login</button>
+            <button type="button" class="btn btn-primary col-md-1 col-md-push-3 hidden" style="display: inline-block" id="logoutButton">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </nav>
   </header>
 
@@ -24,15 +30,16 @@
 <!-- Here's where our Show Movies will show up  -->
   <div id="showContainer" class="container">
     <h1> Movie History<span id="breadcrumbs"></span></h1>
-    <button type="button" class="btn btn-primary" id="untrackedMoviesButton"> Untracked Movies</button>
-    <button type="button" class="btn" id="unwatchedMoviesButton" disabled> Unwatched Movies</button>
-    <button type="button" class="btn" id="watchedMoviesButton" disabled> Watched Movies</button>
-    <button type="button" class="btn" id="favoritesMoviesButton" disabled> Favorites</button>
+    <button type="button" class="btn btn-primary" id="untrackedMoviesButton" data-breadcrumb=" > Search Results"> Untracked Movies</button>
+    <button type="button" class="btn" id="unwatchedMoviesButton" disabled data-breadcrumb=" > Unwatched Movies"> Unwatched Movies</button>
+    <button type="button" class="btn" id="watchedMoviesButton" disabled data-breadcrumb=" > Watched Movies"> Watched Movies</button>
+    <button type="button" class="btn" id="favoritesMoviesButton" disabled data-breadcrumb=" > Favorites"> Favorites</button>
 
-    <div class="row" id="showUntrackedRow"></div>
-    <div class="row hidden" id="showUnwatchedRow"></div>
-    <div class="row hidden" id="showWatchedRow"></div>
-    <div class="row hidden" id="showFavoritesRow"></div>
+    <div class="row" id="showUntrackedRow" data-partner="untrackedMoviesButton"></div>
+    <div class="row hidden" id="showUnwatchedRow" data-partner="unwatchedMoviesButton"></div>
+    <div class="row hidden" id="showWatchedRow" data-partner="watchedMoviesButton"></div>
+    <div class="row hidden" id="showFavoritesRow" data-partner="favoritesMoviesButton"></div>
+
   </div>
 
 <script src="dist/app.js"></script>
