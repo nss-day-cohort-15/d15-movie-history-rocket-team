@@ -33,8 +33,6 @@ $(document).on("click", "#loginButton", function () {
       .then(function () {
         $("#loginButton").addClass('hidden');
         $("#logoutButton").removeClass('hidden');
-        checkEmptyMovies();
-
       });
   });
 });
@@ -246,8 +244,6 @@ function loadDom (data) {
     return interact.searchMovieByImdbId(imdbId);
   }))
   .then((data) => {
-
-
     data.forEach((movie, iter) => {
       movie.fbId = dataArray[iter].key;
       movie.watched = dataArray[iter].watchedStatus;
@@ -263,12 +259,16 @@ function loadDom (data) {
       }
       console.log(movie);
     });
+
+    // On this day, August 29, a big, mean bug was killed. >:(
+    checkEmptyMovies();
   });
-      checkEmptyMovies();
 }
-    function checkEmptyMovies () {
+
+function checkEmptyMovies () {
     $("#noMovies").remove();
-    if (!($("#showContainer").children(".row").children(".movie").length)) {
+    if (!($("#showUnwatchedRow").children(".movie").length) &&
+        !($("#showWatchedRow").children(".movie").length)) {
       $("#showUntrackedRow").append(`<p id="noMovies">:-( You don't have any movies. To add a movie, search for the title above. </p>`);
     }
     $("#noFaves").remove();
@@ -276,6 +276,6 @@ function loadDom (data) {
 
      $("#showFavoritesRow").append(`<p id="noFaves">:-( You don't like anything. You have to give a movie a 10 to create a favorite. </p>`);
     }
-};
+}
 
-  checkEmptyMovies();
+checkEmptyMovies();
