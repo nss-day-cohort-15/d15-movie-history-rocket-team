@@ -193,8 +193,8 @@ function loadDom (data) {
 
       if(movie.watched === false) {
         $("#showUnwatchedRow").append(savedMovieTemplate(movie));
-      } else if (movie.userRating === "10") {
-        $("#showFavoritesRow").append(savedMovieTemplate(movie));
+      // } else if (movie.userRating === "10") {
+      //   $("#showFavoritesRow").append(savedMovieTemplate(movie));
       } else if (movie.watched === true) {
         $("#showWatchedRow").append(savedMovieTemplate(movie));
       }
