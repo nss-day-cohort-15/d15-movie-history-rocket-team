@@ -32,7 +32,7 @@ var saveMovie = function (movieObj) {
   console.log("Parsed movie:", JSON.stringify(movieObj));
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/movies.json`,
+      url: `https://tunnel-snakes-forked-project.firebaseio.com/movies.json`,
       type: 'POST',
       data: JSON.stringify(movieObj),
       dataType: 'json'
@@ -46,7 +46,7 @@ var saveMovie = function (movieObj) {
 var showSavedMovies = function (userId) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/movies.json?orderBy="uid"&equalTo="${userId}"`,
+      url: `https://tunnel-snakes-forked-project.firebaseio.com/movies.json?orderBy="uid"&equalTo="${userId}"`,
       type: 'GET'
     }).done(function(data){
       resolve(data);
@@ -58,7 +58,7 @@ var showSavedMovies = function (userId) {
 var editSavedMovie = function (editMovieObj, editKey) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/movies/${editKey}.json`,
+      url: `https://tunnel-snakes-forked-project.firebaseio.com/movies/${editKey}.json`,
       type: 'PUT',
       data: JSON.stringify(editMovieObj)
     }).done(function(data){
@@ -71,7 +71,7 @@ var editSavedMovie = function (editMovieObj, editKey) {
 var deleteSavedMovie = function (deleteKey) {
   return new Promise (function (resolve, reject) {
     $.ajax({
-      url: `https://rocket-team-movies.firebaseio.com/movies/${deleteKey}.json`,
+      url: `https://tunnel-snakes-forked-project.firebaseio.com/movies/${deleteKey}.json`,
       type: 'DELETE'
     }).done(function(data){
       resolve(data);

@@ -23,6 +23,7 @@ Handlebars.registerHelper("select", function(value, options) {
 $(document).on("click", "#loginButton", function () {
   login()
   .then(function(data) {
+    console.log(data)
     userId = data.user.uid;
     $("#unwatchedMoviesButton, #watchedMoviesButton, #favoritesMoviesButton").removeAttr("disabled");
     $("#showWatchedRow, #showFavoritesRow, #showUnwatchedRow").html("");
