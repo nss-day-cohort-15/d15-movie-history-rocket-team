@@ -25,9 +25,8 @@ $(document).on("click", "#loginButton", function () {
   .then(function(data) {
     userId = data.user.uid;
     $("#unwatchedMoviesButton, #watchedMoviesButton, #favoritesMoviesButton").removeAttr("disabled");
-    $("#showWatchedRow").html("");
-    $("#showUnwatchedRow").html("");
-    $("#showFavoritesRow").html("");
+    $("#showWatchedRow, #showFavoritesRow, #showUnwatchedRow").html("");
+    $("#userName").append(`<marquee> Welcome ${data.user.displayName}!</marquee>`);
     interact.showSavedMovies(userId)
       .then(loadDom)
       .then(function () {
@@ -37,14 +36,33 @@ $(document).on("click", "#loginButton", function () {
   });
 });
 
+// USER LOGOUT
 $(document).on("click", "#logoutButton", function () {
   location.reload();
 });
 
-// ALL THE FIND FUNCTIONS
+// REMOVE SEARCHED MOVIE FROM UNTRACKED PAGE
+$(document).on("click", ".removeButton", function () {
+  $(this).parent(".movie").remove();
+});
+
+// SWITCH WATCHED / UNWATCHED MOVIES / UNTRACKED / FAVORITES ROWS
+$(document).on("click", ".switchViewButton", function() {
+  checkEmptyMovies();
+  let breadcrumb = $(this).data("breadcrumb");
+  let partnerRow = $(this).data("partner");
+
+  $("#breadcrumbs").text(` > ${breadcrumb}`);
+
+  $(`${partnerRow}`).removeClass('hidden');
+  $(`${partnerRow}`).siblings('.row').addClass('hidden');
+
+  $(this).siblings('.btn').removeClass('btn-primary');
+  $(this).addClass('btn-primary');
+});
+
 // THIS IS THE FUNCTION TO SEARCH FOR A MOVIE AND ADD IT TO THE DOM
 $(document).on("keypress", "#searchInput", function (e) {
-  //Validating a movie title
   if (e.keyCode == 13) {
     if(!$("#searchInput").val()) {
       return alert("You need to enter a movie title");
@@ -69,19 +87,15 @@ $(document).on("keypress", "#searchInput", function (e) {
         $("#breadcrumbs").text(`${partnerBreadcrumb}`);
 
       } else {
-      data.userRating = 0;
+        data.userRating = 0;
         if(data.Response === "False" || data.Actors === "N/A"){
           return alert("No Movie Found!");
         }
-      $("#showUntrackedRow").append(movieTemplate(data));
+
+        $("#showUntrackedRow").append(movieTemplate(data));
       }
     });
   }
-});
-
-// REMOVE SEARCHED MOVIE FROM FIND PAGE
-$(document).on("click", ".removeButton", function () {
-  $(this).parent(".movie").remove();
 });
 
 // THIS FUNCTION SAVES A MOVIE TO FIREBASE WITH A UNIQUE ID
@@ -89,76 +103,7 @@ $(document).on("click", ".saveButton", function (e) {
   let movieObj = buildMovieObj(e);
   $(this).parent(".movie").remove();
   interact.saveMovie(movieObj)
-  .then(function (data) {
-    $("#showWatchedRow").html("");
-    $("#showUnwatchedRow").html("");
-    $("#showFavoritesRow").html("");
-    interact.showSavedMovies(userId)
-      .then(loadDom);
-  });
-});
-
-
-// ALL THE SHOW FUNCTIONS
-
-// SWITCH WATCHED / UNWATCHED MOVIES / UNTRACKED / FAVORITES
-
-$(document).on("click", "#untrackedMoviesButton", function() {
-  checkEmptyMovies();
-  $("#breadcrumbs").text(" > Search results");
-
-  $("#showUntrackedRow").removeClass('hidden');
-  $("#showUnwatchedRow").addClass('hidden');
-  $("#showWatchedRow").addClass('hidden');
-  $("#showFavoritesRow").addClass('hidden');
-
-  $("#untrackedMoviesButton").addClass('btn-primary');
-  $("#unwatchedMoviesButton").removeClass('btn-primary');
-  $("#watchedMoviesButton").removeClass('btn-primary');
-  $("#favoritesMoviesButton").removeClass('btn-primary');
-});
-
-$(document).on("click", "#unwatchedMoviesButton", function() {
-  checkEmptyMovies();
-  $("#breadcrumbs").text(" > Unwatched Movies");
-
-  $("#showWatchedRow").addClass('hidden');
-  $("#showUnwatchedRow").removeClass('hidden');
-  $("#showUntrackedRow").addClass('hidden');
-  $("#showFavoritesRow").addClass('hidden');
-
-  $("#unwatchedMoviesButton").addClass('btn-primary');
-  $("#watchedMoviesButton").removeClass('btn-primary');
-  $("#untrackedMoviesButton").removeClass('btn-primary');
-  $("#favoritesMoviesButton").removeClass('btn-primary');
-});
-
-$(document).on("click", "#watchedMoviesButton", function() {
-  checkEmptyMovies();
-  $("#breadcrumbs").text(" > Watched Movies");
-  $("#showWatchedRow").removeClass('hidden');
-  $("#showUnwatchedRow").addClass('hidden');
-  $("#showUntrackedRow").addClass('hidden');
-  $("#showFavoritesRow").addClass('hidden');
-  $("#watchedMoviesButton").addClass('btn-primary');
-  $("#unwatchedMoviesButton").removeClass('btn-primary');
-  $("#untrackedMoviesButton").removeClass('btn-primary');
-  $("#favoritesMoviesButton").removeClass('btn-primary');
-});
-
-$(document).on("click", "#favoritesMoviesButton", function() {
-  checkEmptyMovies();
-  $("#breadcrumbs").text(" > Favorites");
-
-  $("#showFavoritesRow").removeClass('hidden');
-  $("#showUnwatchedRow").addClass('hidden');
-  $("#showWatchedRow").addClass('hidden');
-  $("#showUntrackedRow").addClass('hidden');
-
-  $("#favoritesMoviesButton").addClass('btn-primary');
-  $("#watchedMoviesButton").removeClass('btn-primary');
-  $("#unwatchedMoviesButton").removeClass('btn-primary');
-  $("#untrackedMoviesButton").removeClass('btn-primary');
+  .then(clearAndReload);
 });
 
 // EDITING A MOVIE FUNCITON
@@ -186,26 +131,14 @@ $(document).on("change", ".editMovie", function () {
   };
 
   interact.editSavedMovie(editMovieObj, editKey)
-  .then(function (data) {
-    $("#showWatchedRow").html("");
-    $("#showUnwatchedRow").html("");
-    $("#showFavoritesRow").html("");
-    interact.showSavedMovies(userId)
-      .then(loadDom);
-  });
+  .then(clearAndReload);
 });
 
 // DELETE THAT MOVIE FUNCTION
 $(document).on("click", ".deleteButton", function() {
   let deleteKey = $(this).data("deletekey");
   interact.deleteSavedMovie(deleteKey)
-  .then(function(data) {
-    $("#showWatchedRow").html("");
-    $("#showUnwatchedRow").html("");
-    $("#showFavoritesRow").html("");
-    interact.showSavedMovies(userId)
-    .then(loadDom);
-  });
+  .then(clearAndReload);
 });
 
 // MAKES SONG OBJECT TO BE SAVED
@@ -228,6 +161,13 @@ function buildMovieObj (e) {
     userRating,
     uid
   };
+}
+
+// CLEAR AND RELOAD THE PAGE
+function clearAndReload () {
+    $("#showWatchedRow, #showUnwatchedRow, #showFavoritesRow").html("");
+    interact.showSavedMovies(userId)
+    .then(loadDom);
 }
 
 //LOADS SAVED SONGS TO DOM
@@ -265,17 +205,29 @@ function loadDom (data) {
   });
 }
 
+// CHECK IF THERE ARE MOVIES
 function checkEmptyMovies () {
-    $("#noMovies").remove();
-    if (!($("#showUnwatchedRow").children(".movie").length) &&
-        !($("#showWatchedRow").children(".movie").length)) {
-      $("#showUntrackedRow").append(`<p id="noMovies">:-( You don't have any movies. To add a movie, search for the title above. </p>`);
-    }
-    $("#noFaves").remove();
-    if (!($("#showFavoritesRow").children(".movie").length)) {
 
-     $("#showFavoritesRow").append(`<p id="noFaves">:-( You don't like anything. You have to give a movie a 10 to create a favorite. </p>`);
-    }
+  $("#noMovies").remove();
+  if ( (!($("#showUnwatchedRow").children(".movie").length)) && (!($("#showWatchedRow").children(".movie").length)) && (!($("#showUntrackedRow").children(".movie").length))
+    ) {
+    $("#showUntrackedRow").append(`<p id="noMovies">:-( You don't have any movies. To add a movie, search for the title above.</p>`);
+  }
+
+  $("#noUnwatched").remove();
+  if (!($("#showUnwatchedRow").children(".movie").length)) {
+   $("#showUnwatchedRow").append(`<p id="noUnwatched">:-( You don't have any unwatched movies. Look some up and get to watching!</p>`);
+  }
+
+  $("#noWatched").remove();
+  if (!($("#showWatchedRow").children(".movie").length)) {
+   $("#showWatchedRow").append(`<p id="noWatched">:-( You haven't watched anything. Give your unwatched movies a rating to show you watched them.</p>`);
+  }
+
+  $("#noFaves").remove();
+  if (!($("#showFavoritesRow").children(".movie").length)) {
+   $("#showFavoritesRow").append(`<p id="noFaves">:-( You don't like anything. You have to give a movie a 10 to create a favorite.</p>`);
+  }
 }
 
 checkEmptyMovies();

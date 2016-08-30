@@ -1,3 +1,6 @@
+$navy-color: #000099;
+$goldenROD: goldenrod;
+
 header[role="banner"] {
   #logo-main {
     display: block;
@@ -16,11 +19,25 @@ header[role="banner"] {
   margin: auto;
 }
 
+#noUnwatched {
+  text-align: center;
+  font-size: 1.3em;
+  margin: auto;
+  color: $navy-color;
+}
+
+#noWatched {
+  text-align: center;
+  font-size: 1.3em;
+  margin: auto;
+  color: $goldenROD;
+}
+
 #noFaves {
   text-align: center;
   font-size: 1.3em;
   margin: auto;
-  color: goldenrod;
+  color: $goldenROD;
 }
 
 .movie {
@@ -48,7 +65,7 @@ header[role="banner"] {
 }
 
 .section1 {
-  background-color: goldenrod;
+  background-color: $goldenROD;
   color: #000;
 }
 .section2 {
