@@ -5,20 +5,33 @@
     "browserify": "^13.0.0",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
-    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-watch": "^0.6.1",
-    "matchdep": "^0.3.0",
-    "grunt-browserify": "^5.0.0",
     "handlebars": "^4.0.5",
     "hbsfy": "^2.7.0",
-    "jshint": "^2.9.1",
-    "jshint-stylish": "^2.1.0",
+    "jshint": "^2.9.3",
+    "jshint-stylish": "^2.2.1",
     "matchdep": "^0.3.0"
   },
-   "dependencies": {
+  "dependencies": {
     "firebase": "^3.3.0",
     "jquery": "^3.1.0"
-  }
+  },
+  "description": "You will be split up into teams of three, and your team will build a new application to keep track of movies that you have seen, and want to see, with your own ratings based on [OMDb API](http://omdbapi.com/).",
+  "main": "GruntFile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HubDub/d15-movie-history-rocket-team.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HubDub/d15-movie-history-rocket-team/issues"
+  },
+  "homepage": "https://github.com/HubDub/d15-movie-history-rocket-team#readme"
 }
