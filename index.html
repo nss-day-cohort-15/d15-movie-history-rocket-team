@@ -36,12 +36,13 @@
 
     <button type="button" class="btn switchViewButton" id="unwatchedMoviesButton" disabled data-partner ="#showUnwatchedRow" data-breadcrumb=" > Unwatched Movies"> Unwatched Movies</button>
 
-    <button type="button" class="btn switchViewButton" id="watchedMoviesButton" disabled data-partner ="#showWatchedRow" data-breadcrumb=" > Watched Movies"> Watched Movies</button>
-    
-   <!--  <button type="button" class="btn switchViewButton" id="favoritesMoviesButton" disabled data-partner ="#showFavoritesRow"  data-breadcrumb=" > Favorites"> Favorites</button> -->
+    <button type="button" class="btn switchViewButton" id="watchedMoviesButton" disabled data-partner="#showWatchedRow" disabled data-partner="#showSlider" data-breadcrumb=" > Watched Movies"> Watched Movies</button>
 
-    <label for="ratings-range" >Filter by movie ratings</label>
-    <input type="range" name="ratings-range" min="1" max="10" step="1" value="5">
+   <!--  <button type="button" class="btn switchViewButton" id="favoritesMoviesButton" disabled data-partner ="#showFavoritesRow"  data-breadcrumb=" > Favorites"> Favorites</button> -->
+    <div id="showSlider" class="hidden">
+      <label for="ratings-range" >Filter by movie ratings</label>
+      <input type="range" name="ratings-range" min="1" max="10" step="1" value="5">
+    </div>
 
     <div class="row" id="showUntrackedRow" data-partner="untrackedMoviesButton"></div>
     <div class="row hidden" id="showUnwatchedRow" data-partner="unwatchedMoviesButton"></div>

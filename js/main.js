@@ -57,6 +57,12 @@ $(document).on("click", ".switchViewButton", function() {
   $(`${partnerRow}`).removeClass('hidden');
   $(`${partnerRow}`).siblings('.row').addClass('hidden');
 
+  //this toggles the slider to only show when the watched movies button is clicked
+  console.log(this.id);
+  if (this.id === "watchedMoviesButton") {
+    $("#showSlider").toggleClass("hidden")
+  } else $("#showSlider").addClass("hidden");
+
   $(this).siblings('.btn').removeClass('btn-primary');
   $(this).addClass('btn-primary');
 });
