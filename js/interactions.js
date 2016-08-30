@@ -2,6 +2,7 @@
 
 var $ = require('jquery');
 
+// SEARCH BY TITLE
 var searchMovies = function (movieTitle) {
   return new Promise (function (resolve, reject) {
     $.ajax({
@@ -13,6 +14,7 @@ var searchMovies = function (movieTitle) {
   });
 };
 
+// SEARCH BY IMDBID
 var searchMovieByImdbId = function (imdbID) {
   return new Promise (function (resolve, reject) {
     $.ajax({
@@ -24,6 +26,7 @@ var searchMovieByImdbId = function (imdbID) {
   });
 };
 
+// SAVE TO FB
 var saveMovie = function (movieObj) {
   console.log("Movie to be saved:", movieObj);
   console.log("Parsed movie:", JSON.stringify(movieObj));
@@ -37,9 +40,9 @@ var saveMovie = function (movieObj) {
       resolve(data);
     });
   });
-
 };
 
+// GET SAVED MOVIES BY USERID
 var showSavedMovies = function (userId) {
   return new Promise (function (resolve, reject) {
     $.ajax({
@@ -51,6 +54,7 @@ var showSavedMovies = function (userId) {
   });
 };
 
+// EDIT SAVED MOVIES
 var editSavedMovie = function (editMovieObj, editKey) {
   return new Promise (function (resolve, reject) {
     $.ajax({
@@ -63,6 +67,7 @@ var editSavedMovie = function (editMovieObj, editKey) {
   });
 };
 
+// REMOVE SAVED MOVIE FROM FB
 var deleteSavedMovie = function (deleteKey) {
   return new Promise (function (resolve, reject) {
     $.ajax({
@@ -74,6 +79,7 @@ var deleteSavedMovie = function (deleteKey) {
   });
 };
 
+// GET THE IMDB MOVIES
 var getSavedMovies = function (imdbArray) {
   return Promise.all(imdbArray);
 };

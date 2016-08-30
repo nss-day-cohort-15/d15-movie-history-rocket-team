@@ -9,10 +9,11 @@
 <!-- Nav bar starts here  -->
   <header role="banner">
     <img id="logo-main" src="https://f4.bcbits.com/img/a3357501286_5.jpg" width="200" height="150" alt="Tunnel Snakes movie database">
-  <nav id="navbar-primary" class="navbar navbar-default" role="navigation">
+  <nav id="navbar-primary">
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-push-1" id="navHolder">
+          <div id="userName"></div>
           <div class ="row">
             <label class="col-md-push-3 col-md-2"> Search: </label>
             <input type="text" class="col-md-4 col-md-push-2" id="searchInput" name="searchInput"  placeholder="Search OMDb and your tracked movies" style="display: inline-block">
@@ -30,10 +31,14 @@
 <!-- Here's where our Show Movies will show up  -->
   <div id="showContainer" class="container">
     <h1> Movie History<span id="breadcrumbs"></span></h1>
-    <button type="button" class="btn btn-primary" id="untrackedMoviesButton" data-breadcrumb=" > Search Results"> Untracked Movies</button>
-    <button type="button" class="btn" id="unwatchedMoviesButton" disabled data-breadcrumb=" > Unwatched Movies"> Unwatched Movies</button>
-    <button type="button" class="btn" id="watchedMoviesButton" disabled data-breadcrumb=" > Watched Movies"> Watched Movies</button>
-    <button type="button" class="btn" id="favoritesMoviesButton" disabled data-breadcrumb=" > Favorites"> Favorites</button>
+
+    <button type="button" class="btn switchViewButton btn-primary" id="untrackedMoviesButton" data-partner ="#showUntrackedRow" data-breadcrumb=" > Search Results"> Untracked Movies</button>
+
+    <button type="button" class="btn switchViewButton" id="unwatchedMoviesButton" disabled data-partner ="#showUnwatchedRow" data-breadcrumb=" > Unwatched Movies"> Unwatched Movies</button>
+
+    <button type="button" class="btn switchViewButton" id="watchedMoviesButton" disabled data-partner ="#showWatchedRow" data-breadcrumb=" > Watched Movies"> Watched Movies</button>
+
+    <button type="button" class="btn switchViewButton" id="favoritesMoviesButton" disabled data-partner ="#showFavoritesRow"  data-breadcrumb=" > Favorites"> Favorites</button>
 
     <div class="row" id="showUntrackedRow" data-partner="untrackedMoviesButton"></div>
     <div class="row hidden" id="showUnwatchedRow" data-partner="unwatchedMoviesButton"></div>
